@@ -148,7 +148,7 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
             onChange={(e) => setBio(e.target.value)}
             rows={4}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
-            placeholder={"Keep the key text only would works best"}
+            placeholder={"Include sections with key skills, responsibilities, and requirements"}
           />
           {/* <div className="flex mb-5 items-center space-x-3">
             <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
