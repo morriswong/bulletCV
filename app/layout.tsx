@@ -15,7 +15,7 @@ const geistMono = localFont({
 let title = "bulletCV – Resume Bullet Point Generator";
 let description = "Generate your bullet points in seconds";
 let url = "https://www.bulletcv.koyeb.app/";
-let ogimage = "og.png";
+let ogimage = "./og.png";
 let sitename = "bulletcv.koyeb.app";
 
 export const metadata: Metadata = {
