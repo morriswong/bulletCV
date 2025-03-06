@@ -15,7 +15,7 @@ const geistMono = localFont({
 let title = "bulletCV – Resume Bullet Point Generator";
 let description = "Generate your bullet points in seconds";
 let url = "https://www.bulletcv.koyeb.app/";
-// let ogimage = "https://www.twitterbio.io/og-image.png";
+let ogimage = "og.png";
 let sitename = "bulletcv.koyeb.app";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   openGraph: {
-    // images: [ogimage],
+    images: [ogimage],
     title,
     description,
     url: url,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    // images: [ogimage],
+    images: [ogimage],
     title,
     description,
   },
