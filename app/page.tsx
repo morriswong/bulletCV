@@ -26,21 +26,30 @@ export default function Home() {
   };
 
   const prompt = `
-    ### Task
+  ### Task
   Edit the bullet points in the resume based on the job description, suggest edits of the bullet point on the resume
   The bullet point needs to be under 20 words, with no hashtags labells and clearly numbered at 1, 2, 3 and so on.
   Only numbered bullets are allowed, nothing else should be in the response.
 
-  ### Instructions
-  Write bullet points using the following XYZ formula:
-  Accomplished [X] as measured by [Y] by doing [Z].
-
-  Achievement (X): Begin with a strong action verb! Start each bullet point with a compelling action verb that emphasizes the quantifiable result of your action. These action words capture the reader's attention and highlight your achievements.
-  Context (Y): Provide background information! Offer the context or situation in which the action took place. This helps to paint a clear picture of the circumstances, allowing the reader to understand the scope and significance of your actions.
-  Action (Z): Describe the action taken! Conclude each bullet point with a detailed description of the actions you took to achieve the result. Providing concrete examples of your work demonstrates your capabilities and potential contributions to the next role.
-
-  Make sure every bullet point follows the structure above. If you need help, click the button below to generate some bullet points.
+  ### Bullet Point Writing Instructions
+  Write bullet points using the following XYZ formula: Accomplished [X] as measured by [Y] by doing [Z].
   
+  Here are some examples
+  Marketing manager 
+  Increased page views (X) by 23% (Y) in six months by implementing social media distribution strategies (Z). 
+  Reduced ad spend (X) by 30% (Y) by improving customer targeting (Z).
+  
+  Sales specialist
+  Increased conversions (X) by 28% (Y) after training five new team members (Z). 
+  Launched a new product (X) that led to a 15% profit increase in Q1 (Y) by engaging newsletter subscribers (Z). 
+  
+  Customer service 
+  Reduced errors (X) by 40% (Y) after creating a new Standard Operating Procedure (SOP) document (Z). 
+  Increased customer satisfaction (X) by 18% (Y) by implementing survey feedback (Z). 
+
+  Make sure every bullet point follows the structure above. 
+  
+  Based on the above, adpat the bullet points to the job description:
   ${bio}${bio.slice(-1) === "." ? "" : "."}`;
 
   const generateBio = async (e: any) => {
@@ -95,8 +104,8 @@ export default function Home() {
               className="mb-5 sm:mb-0"
             /> */}
             <p className="text-left font-medium">
-              Drop in your job descriptions{" "}
-              {/* <span className="text-slate-500">(Keep the key text only would works best)</span>. */}
+              Drop in your job descriptions {" "}
+              <span className="text-slate-500">(The key section only for best results)</span>.
             </p>
           </div>
           <textarea
@@ -145,11 +154,12 @@ export default function Home() {
                 >
                   Your generated bullets
                 </h2>
+                <span className="text-slate-500">(Click on the bullets to copy to clipboard)</span>.
               </div>
               <div className="space-y-8 flex flex-col items-center justify-center max-w-xl mx-auto">
                 {generatedBios
                   .substring(generatedBios.indexOf("1") + 3)
-                  .split(/\d+\./)
+                  .split(/^\d+\./gm)
                   .map((generatedBio) => {
                     return (
                       <div
