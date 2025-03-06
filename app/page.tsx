@@ -50,11 +50,17 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
 
   const prompt = `
   ### Task
-  Edit the bullet points in the resume based on the job description, suggest edits of the bullet point on the resume
+  You goal is to suggest resume bullet points based on the job description.
   The bullet point needs to be under 20 words, with no hashtags labells and clearly numbered at 1, 2, 3 and so on.
   Only numbered bullets are allowed, nothing else should be in the response.
 
   ### Bullet Point Writing Instructions
+  From the following job description, extract the top 5 key responsibilities or required skills. For each one, generate a resume bullet point that showcases relevant experience or proficiency. Each bullet point should:
+  - Start with a powerful action verb
+  - Describe a specific accomplishment or task
+  - Include quantifiable metrics or results where applicable
+  - Integrate keywords from the job description
+
   Write bullet points using the following XYZ formula: Accomplished [X] as measured by [Y] by doing [Z].
   
   Here are some examples
@@ -70,9 +76,7 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
   Reduced errors (X) by 40% (Y) after creating a new Standard Operating Procedure (SOP) document (Z). 
   Increased customer satisfaction (X) by 18% (Y) by implementing survey feedback (Z). 
 
-  Make sure every bullet point follows the structure above. 
-  
-  Based on the above, adpat the bullet points to the job description:
+  Ensure the bullet points are concise, professional, and directly aligned with the job requirements.
   ${bio}${bio.slice(-1) === "." ? "" : "."}`;
 
   const generateBio = async (e: any) => {

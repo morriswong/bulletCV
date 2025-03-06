@@ -15,7 +15,7 @@ export default function Toggle({ isDemo, setIsDemo }: any) {
         <span
           className={`font-medium ${isDemo ? "text-gray-400" : "text-gray-900"}`}
         >
-          Write your own
+          Your Job Description
         </span>{" "}
       </Switch.Label>
       <Switch
@@ -41,7 +41,7 @@ export default function Toggle({ isDemo, setIsDemo }: any) {
         <span
           className={`font-medium ${!isDemo ? "text-gray-400" : "text-gray-900"}`}
         >
-          Try Demo
+          Demo Job Description
         </span>{" "}
       </Switch.Label>
     </Switch.Group>
