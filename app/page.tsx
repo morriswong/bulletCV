@@ -119,7 +119,7 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
           Over <b>141,592</b> bullets generated so far
         </p>
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
-          Resume Bullet Points idea in seconds
+        Resume Bullet Point Ideas in Seconds
         </h1>
         <div className="mt-7">
           <Toggle isDemo={isDemo} setIsDemo={setIsDemo} />
