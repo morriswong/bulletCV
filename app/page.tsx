@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import DropDown, { VibeType } from "../components/DropDown";
 import Footer from "../components/Footer";
@@ -19,8 +19,17 @@ export default function Home() {
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
+  // Add useEffect to scroll when generatedBios changes and is not empty
+  useEffect(() => {
+    if (generatedBios && bioRef.current) {
+      setTimeout(() => {
+        bioRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
+    }
+  }, [generatedBios]);
+
   const scrollToBios = () => {
-    if (bioRef.current !== null) {
+    if (bioRef.current !== null && generatedBios) {
       bioRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -74,10 +83,20 @@ export default function Home() {
     }
 
     const runner = ChatCompletionStream.fromReadableStream(response.body!);
-    runner.on("content", (delta) => setGeneratedBios((prev) => prev + delta));
+    let isFirstChunk = true;
+    runner.on("content", (delta) => {
+      setGeneratedBios((prev) => prev + delta);
+      if (isFirstChunk) {
+        setTimeout(scrollToBios, 500);
+        isFirstChunk = false;
+      }
+    });
 
-    scrollToBios();
-    setLoading(false);
+    runner.on("end", () => {
+      setLoading(false);
+      // Increase timeout and ensure content is rendered before scrolling
+      setTimeout(scrollToBios, 1000);
+    });
   };
 
   return (
