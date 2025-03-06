@@ -12,11 +12,11 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
-let title = "Tweetbio – AI Twitter Bio Generator";
+let title = "bulletCV – Resume Bullet Point Generator";
 let description = "Generate your next Twitter bio in seconds";
-let url = "https://www.twitterbio.io/";
+let url = "https://www.bulletcv.koyeb.app/";
 let ogimage = "https://www.twitterbio.io/og-image.png";
-let sitename = "twitterbio.io";
+let sitename = "bulletcv.koyeb.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
