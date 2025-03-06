@@ -7,15 +7,20 @@ import DropDown, { VibeType } from "../components/DropDown";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
-// import Toggle from "../components/Toggle";
+import Toggle from "../components/Toggle";
 import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(``);
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
-  const [isLlama, setIsLlama] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
+  
+  // Sample job description for demo mode
+  const sampleJobDescription = `Marketing Manager Position
+Responsibilities include developing marketing campaigns, analyzing market trends, and managing social media presence. 
+Requirements: 3+ years of experience in digital marketing, proven track record of increasing engagement, and experience with SEO/SEM campaigns.`;
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
@@ -27,6 +32,15 @@ export default function Home() {
       }, 500);
     }
   }, [generatedBios]);
+  
+  // Add useEffect to populate textarea with sample job description when demo mode is toggled on
+  useEffect(() => {
+    if (isDemo) {
+      setBio(sampleJobDescription);
+    } else if (bio === sampleJobDescription) {
+      setBio(""); // Clear the textarea if it contains the sample text and demo is turned off
+    }
+  }, [isDemo]);
 
   const scrollToBios = () => {
     if (bioRef.current !== null && generatedBios) {
@@ -72,9 +86,7 @@ export default function Home() {
       },
       body: JSON.stringify({
         prompt,
-        model: isLlama
-          ? "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
-          : "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
+        model: "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
       }),
     });
 
@@ -104,14 +116,14 @@ export default function Home() {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <p className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out">
-          <b>126,657</b> bullets generated so far
+          Over <b>141,592</b> bullets generated so far
         </p>
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Resume Bullet Points idea in seconds
         </h1>
-        {/* <div className="mt-7">
-          <Toggle isGPT={isLlama} setIsGPT={setIsLlama} />
-        </div> */}
+        <div className="mt-7">
+          <Toggle isDemo={isDemo} setIsDemo={setIsDemo} />
+        </div>
 
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">

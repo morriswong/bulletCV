@@ -5,38 +5,31 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Toggle({ isGPT, setIsGPT }: any) {
+export default function Toggle({ isDemo, setIsDemo }: any) {
   return (
     <Switch.Group as="div" className="flex items-center">
       <Switch.Label
         as="span"
         className="mr-3 text-sm flex justify-center gap-2 items-center"
       >
-        <Image
-          src="/mistral-logo.jpeg"
-          width={25}
-          height={25}
-          alt="1 icon"
-          className={`${isGPT && "opacity-50"}`}
-        />
         <span
-          className={`font-medium ${isGPT ? "text-gray-400" : "text-gray-900"}`}
+          className={`font-medium ${isDemo ? "text-gray-400" : "text-gray-900"}`}
         >
-          Mixtral 8x7B
+          Write your own
         </span>{" "}
       </Switch.Label>
       <Switch
-        checked={isGPT}
-        onChange={setIsGPT}
+        checked={isDemo}
+        onChange={setIsDemo}
         className={classNames(
-          isGPT ? "bg-black" : "bg-gray-200",
+          isDemo ? "bg-black" : "bg-gray-200",
           "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-offset-2"
         )}
       >
         <span
           aria-hidden="true"
           className={classNames(
-            isGPT ? "translate-x-5" : "translate-x-0",
+            isDemo ? "translate-x-5" : "translate-x-0",
             "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
           )}
         />
@@ -46,19 +39,10 @@ export default function Toggle({ isGPT, setIsGPT }: any) {
         className="ml-3 text-sm flex justify-center gap-2 items-center"
       >
         <span
-          className={`font-medium ${
-            !isGPT ? "text-gray-400" : "text-gray-900"
-          }`}
+          className={`font-medium ${!isDemo ? "text-gray-400" : "text-gray-900"}`}
         >
-          Llama 3.1 8B
+          Try Demo
         </span>{" "}
-        <Image
-          src="/llama-logo.webp"
-          width={40}
-          height={40}
-          alt="Meta logo"
-          className={`${!isGPT && "opacity-50"}`}
-        />
       </Switch.Label>
     </Switch.Group>
   );
