@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const { question } = await request.json();
 
   const res = await together.chat.completions.create({
-    model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+    model: process.env.TOGETHER_MODEL,
     messages: [{ role: "user", content: question }],
     stream: true,
   });
