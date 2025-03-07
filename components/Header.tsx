@@ -16,9 +16,9 @@ export default function Header() {
       </Link>
       <a
         className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100"
-        href="https://tally.so/r/wav27X"
-        target="_blank"
-        rel="noopener noreferrer"
+        data-tally-open="wav27X"
+        data-tally-emoji-text="👋"
+        data-tally-emoji-animation="wave"
       >
         {/* <Github /> */}
         <p>BulletCV Plus: Join Waitlist!</p>

@@ -51,6 +51,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <head>
         <PlausibleProvider domain="twitterbio.io" />
+        <script async src="https://tally.so/widgets/embed.js"></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
