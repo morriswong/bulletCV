@@ -1,22 +1,40 @@
-# [twitterbio.io](https://www.twitterbio.io/)
+# BulletCV
 
-This project generates Twitter (X) bios for you using Together AI.
+BulletCV is a modern resume builder that helps you create professional, bullet-point focused resumes quickly and efficiently.
 
-[![Twitter Bio Generator](./public/screenshot.png)](https://www.twitterbio.io)
+## Features
 
-## How it works
+- **Bullet Point Optimization**: Create concise, impactful bullet points for your work experience
+- **Modern Templates**: Choose from professionally designed resume templates
+- **Easy Editing**: Intuitive interface for adding and organizing your resume content
+- **Export Options**: Download your resume as PDF, DOCX, or other formats
+- **Real-time Preview**: See changes to your resume as you make them
 
-This project uses both [Mixtral 8x7B](https://api.together.xyz/playground/chat/mistralai/Mixtral-8x7B-Instruct-v0.1) and [Llama 3.1 8B](https://api.together.xyz/playground/chat/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo) with streaming to generate a Twitter bio. It constructs a prompt based on the form and user input, sends it either to the [Together.ai](https://togetherai.link/) API, then streams the response back to the application.
+## Getting Started
 
-If you'd like to see how I built an older version of this app with GPT 3.5, check out the [video](https://youtu.be/JcE-1xzQTE0) or [blog post](https://vercel.com/blog/gpt-3-app-next-js-vercel-edge-functions).
+### Prerequisites
 
-## Running Locally
+- Node.js (v14 or higher)
+- npm or yarn
 
-1. Create a `.env` file, make an account at [Together.ai](https://togetherai.link/), and add your API key under `TOGETHER_API_KEY`
-2. Run the application with `npm run dev` and it will be available at `http://localhost:3000`.
+### Installation
 
-## One-Click Deploy
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/bulletCV.git
+cd bulletCV
+```
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Nutlope/twitterbio&env=TOGETHER_API_KEY&project-name=twitter-bio-generator&repo-name=twitterbio)
+3. Start the development server
+```bash
+npm start
+# or
+yarn start
+```
