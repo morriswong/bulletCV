@@ -41,7 +41,7 @@ export default function Toggle({ isDemo, setIsDemo }: any) {
         <span
           className={`font-medium ${!isDemo ? "text-gray-400" : "text-gray-900"}`}
         >
-          Demo Job Description
+          Sample Job Description
         </span>{" "}
       </Switch.Label>
     </Switch.Group>

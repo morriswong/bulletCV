@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import Toggle from "../components/Toggle";
+import TabSelector from "../components/TabSelector";
 import { ChatCompletionStream } from "together-ai/lib/ChatCompletionStream";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
   const [vibe, setVibe] = useState<VibeType>("Professional");
   const [generatedBios, setGeneratedBios] = useState<String>("");
   const [isDemo, setIsDemo] = useState(false);
+  const [selectedJob, setSelectedJob] = useState("");
   
   // Sample job description for demo mode
   const sampleJobDescription = `Marketing Manager Position
@@ -36,11 +38,11 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
   // Add useEffect to populate textarea with sample job description when demo mode is toggled on
   useEffect(() => {
     if (isDemo) {
-      setBio(sampleJobDescription);
-    } else if (bio === sampleJobDescription) {
-      setBio(""); // Clear the textarea if it contains the sample text and demo is turned off
+      setBio(selectedJob || sampleJobDescription);
+    } else {
+      setBio(""); // Clear the textarea when demo is turned off
     }
-  }, [isDemo]);
+  }, [isDemo, selectedJob]);
 
   const scrollToBios = () => {
     if (bioRef.current !== null && generatedBios) {
@@ -128,6 +130,14 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
         <div className="mt-7">
           <Toggle isDemo={isDemo} setIsDemo={setIsDemo} />
         </div>
+
+        {isDemo && (
+          <TabSelector
+            selectedJob={selectedJob}
+            onSelectJob={setSelectedJob}
+            isDemo={isDemo}
+          />
+        )}
 
         <div className="max-w-xl w-full">
           <div className="flex mt-10 items-center space-x-3">
