@@ -1,22 +1,32 @@
-# [twitterbio.io](https://www.twitterbio.io/)
+# BulletCV
 
-This project generates Twitter (X) bios for you using Together AI.
+BulletCV helps you get bullet point ideas in seconds.
 
-[![Twitter Bio Generator](./public/screenshot.png)](https://www.twitterbio.io)
+## Getting Started
 
-## How it works
+### Prerequisites
 
-This project uses both [Mixtral 8x7B](https://api.together.xyz/playground/chat/mistralai/Mixtral-8x7B-Instruct-v0.1) and [Llama 3.1 8B](https://api.together.xyz/playground/chat/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo) with streaming to generate a Twitter bio. It constructs a prompt based on the form and user input, sends it either to the [Together.ai](https://togetherai.link/) API, then streams the response back to the application.
+- Node.js (v14 or higher)
+- npm or yarn
 
-If you'd like to see how I built an older version of this app with GPT 3.5, check out the [video](https://youtu.be/JcE-1xzQTE0) or [blog post](https://vercel.com/blog/gpt-3-app-next-js-vercel-edge-functions).
+### Installation
 
-## Running Locally
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/bulletCV.git
+cd bulletCV
+```
 
-1. Create a `.env` file, make an account at [Together.ai](https://togetherai.link/), and add your API key under `TOGETHER_API_KEY`
-2. Run the application with `npm run dev` and it will be available at `http://localhost:3000`.
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
 
-## One-Click Deploy
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Nutlope/twitterbio&env=TOGETHER_API_KEY&project-name=twitter-bio-generator&repo-name=twitterbio)
+3. Start the development server
+```bash
+npm start
+# or
+yarn start
+```

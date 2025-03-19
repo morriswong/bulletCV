@@ -12,7 +12,7 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
-let title = "bulletCV – Resume Bullet Point Generator";
+let title = "BulletCV – Resume Bullet Point Generator";
 let description = "Generate your bullet points in seconds";
 let url = "https://www.bulletcv.koyeb.app/";
 let ogimage = "./og.png";
@@ -51,6 +51,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <head>
         <PlausibleProvider domain="twitterbio.io" />
+        <script async src="https://tally.so/widgets/embed.js"></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
