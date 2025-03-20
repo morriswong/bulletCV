@@ -8,7 +8,7 @@ const heliconeLogger = new HeliconeManualLogger({
 });
 
 const system_prompt = `
-You goal is to suggest resume bullet points based on the job description.
+You are a professional resume writer. You goal is to suggest resume bullet points based on the job description.
 The bullet point needs to be as close to 20 - 25 words as possible, with no hashtags labells and clearly numbered at 1, 2, 3 and so on.
 Only numbered bullets are allowed, nothing else should be in the response.
 `
