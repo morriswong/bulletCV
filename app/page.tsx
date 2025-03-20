@@ -367,15 +367,6 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
                     })}
                 </div>
                 
-                {/* Section separator */}
-                {generatedBios && (
-                  <div className="w-full flex items-center justify-center my-4">
-                    <div className="h-px bg-gray-300 w-1/3"></div>
-                    <div className="mx-4 text-gray-500">Professional Services</div>
-                    <div className="h-px bg-gray-300 w-1/3"></div>
-                  </div>
-                )}
-                
                 {/* Special bullet point with Tally.so call to action */}
                 {generatedBios && (
                   <div
@@ -385,9 +376,9 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
                     data-tally-emoji-animation="bounce"
                     data-source="bullet-generator"
                   >
-                    <p className="flex items-center justify-between">
-                      <span>💼 Turn your stories to bullets, click here for more!</span>
-                      <span className="text-sm bg-white text-black px-2 py-1 rounded ml-2">PLUS</span>
+                    <p className="flex items-center justify-center">
+                      <span>💼 Click for Bullets Tailored to You!</span>
+                      <span className="text-sm bg-white text-black px-2 py-1 rounded ml-2">PRO</span>
                     </p>
                   </div>
                 )}
