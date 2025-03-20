@@ -31,6 +31,7 @@ export async function POST(req: Request) {
   // Initialize Together client
   const together = new Together({
     apiKey: process.env.TOGETHER_API_KEY,
+    baseURL: process.env.HELICONE_BASE_URL
   });
 
   // Make the request
