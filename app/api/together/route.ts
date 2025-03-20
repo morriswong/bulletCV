@@ -1,9 +1,10 @@
-import OpenAI from "openai";
+import Together from "together-ai";
 import { HeliconeManualLogger } from "@helicone/helpers";
 
-const openai = new OpenAI({
+// Initialize Together client
+const together = new Together({
   apiKey: process.env.TOGETHER_API_KEY,
-  baseURL: process.env.HELICONE_BASE_URL,
+  baseURL: process.env.HELICONE_BASE_URL
 });
 
 // Initialize the Helicone logger
@@ -31,15 +32,26 @@ export async function POST(req: Request) {
     temperature: 0.5,
     max_tokens: 200,
     stream: true,
-  }
+  } as Together.Chat.CompletionCreateParamsStreaming & { stream: true };
+
 
   // Make the request
-  const response = await openai.chat.completions.create(body);
-  const stream = response.toReadableStream();
-  const [streamForUser, streamForLogging] = stream.tee();  
-  heliconeLogger.logSingleStream(body, streamForLogging);
+  const response = await together.chat.completions.create(body);
   
-  return new Response(streamForUser);
+  // Split the stream into two for logging and processing
+  const [loggingStream, clientStream] = response.tee();
+  
+  // Log the stream to Helicone
+  heliconeLogger.logStream(
+    body, 
+    async (resultRecorder) => {
+      resultRecorder.attachStream(loggingStream.toReadableStream());
+      return clientStream;
+    }
+  );
+
+  // Return the client stream
+  return new Response(clientStream.toReadableStream());
 }
 
 export const runtime = "edge";
