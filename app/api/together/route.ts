@@ -1,6 +1,12 @@
 import Together from "together-ai";
 import { HeliconeManualLogger } from "@helicone/helpers";
 
+// Initialize Together client
+const together = new Together({
+  apiKey: process.env.TOGETHER_API_KEY,
+  baseURL: process.env.HELICONE_BASE_URL
+});
+
 // Initialize the Helicone logger
 const heliconeLogger = new HeliconeManualLogger({
   apiKey: process.env.HELICONE_API_KEY!,
@@ -28,11 +34,6 @@ export async function POST(req: Request) {
     stream: true,
   } as Together.Chat.CompletionCreateParamsStreaming & { stream: true };
 
-  // Initialize Together client
-  const together = new Together({
-    apiKey: process.env.TOGETHER_API_KEY,
-    baseURL: process.env.HELICONE_BASE_URL
-  });
 
   // Make the request
   const response = await together.chat.completions.create(body);
@@ -41,9 +42,13 @@ export async function POST(req: Request) {
   const [loggingStream, clientStream] = response.tee();
   
   // Log the stream to Helicone
-  heliconeLogger.logStream(body, async (resultRecorder) => {
-    resultRecorder.attachStream(loggingStream.toReadableStream());
-  });
+  heliconeLogger.logStream(
+    body, 
+    async (resultRecorder) => {
+      resultRecorder.attachStream(loggingStream.toReadableStream());
+      return clientStream;
+    }
+  );
 
   // Return the client stream
   return new Response(clientStream.toReadableStream());
