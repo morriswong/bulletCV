@@ -98,6 +98,8 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
   Increased customer satisfaction (X) by 18% (Y) by implementing survey feedback (Z). 
 
   Ensure the bullet points are concise, professional, and directly aligned with the job requirements.
+
+  ### Job Description
   ${bio}${bio.slice(-1) === "." ? "" : "."}`;
 
   const concisePrompt = `
