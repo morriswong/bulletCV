@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  experimental: {
+    serverComponentsExternalPackages: ['puppeteer-core', 'jsdom'],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       {

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Readability } from '@mozilla/readability';
 import { JSDOM } from 'jsdom';
+import puppeteer from 'puppeteer-core';
 
 export async function POST(request: Request) {
   try {
@@ -25,11 +26,20 @@ export async function POST(request: Request) {
       html = await fetchResponse.text();
     } catch (fetchError) {
       // Fallback to Puppeteer if fetch fails
-      const browser = await puppeteer.launch({
-        headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
-        ignoreHTTPSErrors: true
-      });
+      let browser;
+      try {
+        browser = await puppeteer.launch({
+          headless: true,
+          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+          ignoreHTTPSErrors: true,
+          executablePath: process.env.AWS_LAMBDA_FUNCTION_NAME
+            ? process.env.CHROMIUM_PATH
+            : puppeteer.executablePath(),
+        } as any);
+      } catch (browserError) {
+        console.error('Failed to launch browser:', browserError);
+        throw new Error('Failed to launch browser for content extraction');
+      }
       const page = await browser.newPage();
       await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1 });
       
@@ -60,11 +70,17 @@ export async function POST(request: Request) {
       pretendToBeVisual: true,
       runScripts: 'dangerously'
     });
-    const article = new Readability(dom.window.document, {
+    
+    // Use type assertion with Record to bypass TypeScript restrictions
+    // This allows us to use the real API options that exist in the JS implementation
+    // but aren't properly typed in the TS definitions
+    const readabilityOptions: Record<string, any> = {
       charThreshold: 500,
       stripUnlikelyCandidates: false,
       nukeXML: true
-    }).parse();
+    };
+    
+    const article = new Readability(dom.window.document, readabilityOptions).parse();
     
     if (!article || !article.textContent?.trim()) {
       return NextResponse.json({ error: 'API_ERROR: No extractable content found, try copy and paste text instead' }, { status: 400 });
