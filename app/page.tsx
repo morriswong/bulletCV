@@ -37,6 +37,38 @@ export default function Home() {
   const [isDemo, setIsDemo] = useState(false);
   const [selectedJob, setSelectedJob] = useState("");
   const [promptType, setPromptType] = useState<string>("Default");
+  const [jobUrl, setJobUrl] = useState("");
+  const [errorType, setErrorType] = useState<'' | 'validation' | 'api'>('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // Function to fetch job description from URL using Readability
+  const fetchJobDescription = async (url: string) => {
+    try {
+      // Validate URL format - simplified to just check for http/https protocols
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        throw new Error('VALIDATION_ERROR: Invalid URL format');
+      }
+      
+      const response = await fetch('/api/extract', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`${errorData.error || 'API_ERROR: Failed to extract content'}`);
+      }
+      
+      const { content } = await response.json();
+      return content || '';
+    } catch (error) {
+      console.error('Error fetching job description:', error);
+      throw error; // Propagate error to UI
+    }
+  };
   
   // Sample job description for demo mode
   const sampleJobDescription = `Marketing Manager Position
@@ -211,14 +243,50 @@ Requirements: 3+ years of experience in digital marketing, proven track record o
         )}
 
         <div className="max-w-xl w-full">
-          <div className="flex mt-10 items-center space-x-3">
-            {/* <Image
-              src="/1-black.png"
-              width={30}
-              height={30}
-              alt="1 icon"
-              className="mb-5 sm:mb-0"
-            /> */}
+          {!isDemo && (
+            <div className="flex flex-col mt-10 space-y-3">
+              <div className="flex items-center space-x-3">
+                <p className="text-left font-medium">
+                  Paste a job description URL (Beta)
+                </p>
+              </div>
+              <div className="relative">
+                <input
+                  type="url"
+                  value={jobUrl}
+                  onChange={async (e) => {
+                    setJobUrl(e.target.value);
+                    if (e.target.value) {
+                      try {
+                        setErrorType('');
+                        const description = await fetchJobDescription(e.target.value);
+                        setBio(description);
+                      } catch (error: any) {
+                        setErrorType(error.message.startsWith('VALIDATION_ERROR') ? 'validation' : 'api');
+                        setErrorMessage(error.message.replace(/^(VALIDATION_ERROR|API_ERROR):\s*/i, ''));
+                        setBio('');
+                      }
+                    }
+                  }}
+                  className={`w-full rounded-md ${errorType ? 'border-red-300' : 'border-gray-300'} shadow-sm focus:border-black focus:ring-black px-3 py-2`}
+                  placeholder="https://example.com/job-description"
+                />
+                {errorType === 'validation' && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" title="Invalid URL format">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
+                {errorType === 'api' && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errorMessage}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="flex mt-5 items-center space-x-3">
             <p className="text-left font-medium">
               Drop in your job descriptions {" "}
               <span className="text-slate-500">(The key section only for best results)</span>.
