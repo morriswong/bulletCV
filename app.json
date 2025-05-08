@@ -1,0 +1,20 @@
+{
+  "name": "BulletCV",
+  "description": "A web application for extracting job descriptions and creating bulletpoints for your CV",
+  "repository": "https://github.com/[your-github-username]/bulletCV",
+  "keywords": ["nextjs", "puppeteer", "cv", "resume"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment for the application",
+      "value": "production"
+    }
+  }
+}

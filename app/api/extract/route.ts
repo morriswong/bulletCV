@@ -28,13 +28,24 @@ export async function POST(request: Request) {
       // Fallback to Puppeteer if fetch fails
       let browser;
       try {
+        // Determine the environment and set the appropriate executablePath
+        const isHeroku = process.env.DYNO || false;
+        const isAWSLambda = process.env.AWS_LAMBDA_FUNCTION_NAME || false;
+        
         browser = await puppeteer.launch({
           headless: true,
-          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'],
+          args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security',
+            '--disable-dev-shm-usage',
+            '--disable-features=IsolateOrigins',
+            '--disable-site-isolation-trials'
+          ],
           ignoreHTTPSErrors: true,
-          executablePath: process.env.AWS_LAMBDA_FUNCTION_NAME
-            ? process.env.CHROMIUM_PATH
-            : puppeteer.executablePath(),
+          executablePath: process.env.CHROMIUM_PATH || 
+                         process.env.CHROME_BIN || 
+                         (isHeroku ? '/app/.cache/puppeteer/chrome/linux-stable/chrome-linux64/chrome' : undefined),
         } as any);
       } catch (browserError) {
         console.error('Failed to launch browser:', browserError);
